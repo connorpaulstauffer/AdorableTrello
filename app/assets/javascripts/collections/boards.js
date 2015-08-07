@@ -3,5 +3,10 @@ Trello.Collections.Boards = Backbone.Collection.extend({
 
   model: Trello.Models.Board,
 
-  getOrFetch
+  getOrFetch: function (id) {
+    var board = this.get(id) || new Trello.Models.Board({ id: id });
+    board.fetch();
+
+    return board;
+  }
 });
