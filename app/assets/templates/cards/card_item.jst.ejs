@@ -1,0 +1,12 @@
+<div class="panel panel-default card-item">
+  <% if (card.get('image_url')) { %>
+    <div class="panel-body card-img">
+      <img src="<%= card.escape('image_url') %>"
+           class="img-responsive center-block"/>
+    </div>
+  <%  } %>
+
+  <div class="panel-footer">
+    <%= card.escape('name') %>
+  </div>
+</div>

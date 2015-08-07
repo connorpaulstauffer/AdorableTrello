@@ -1,3 +1,5 @@
+<a href=""><<< Back to index</a>
+
 <h2><%= board.get("name") %></h2>
 
 <div class="board">
@@ -5,4 +7,7 @@
   </ul>
 </div>
 
-<a href=""><<< Back to index</a>
+<script type="text/javascript">
+  var h = $(window).height() - $('.board').offset().top;
+  $('.board').height(h);
+</script>

@@ -10,7 +10,8 @@
 #
 
 class List < ActiveRecord::Base
-  validates :name, presence: true
+  validates :name, :board, presence: true
 
   belongs_to :board
+  has_many :cards
 end
