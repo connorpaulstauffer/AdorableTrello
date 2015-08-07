@@ -1,5 +1,7 @@
 Trello.Collections.Boards = Backbone.Collection.extend({
   url: "api/boards",
 
-  model: Trello.Models.Board
+  model: Trello.Models.Board,
+
+  getOrFetch
 });
