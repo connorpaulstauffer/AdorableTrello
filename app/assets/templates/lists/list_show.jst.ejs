@@ -3,13 +3,12 @@
     <%= list.escape('name') %>
   </div>
 
-  <div class="panel-body card-list">
-  </div>
+  <ul class="panel-body card-list sortable-cards">
+  </ul>
 </div>
 
 <script type="text/javascript">
   var boardHeight = $('.board').height();
-  $('.list-container').parent().height(boardHeight - 2);
   $('.list-container').css("max-height", boardHeight - 2);
   var headerHeight = $('.panel-heading').height();
   $('.card-list').css("max-height", boardHeight - headerHeight - 2);

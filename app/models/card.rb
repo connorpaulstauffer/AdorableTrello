@@ -13,6 +13,15 @@
 
 class Card < ActiveRecord::Base
   validates :name, :list, presence: true
+  before_save :ensure_rank
 
   belongs_to :list
+
+  private
+  def ensure_rank
+    unless self.rank
+      max = Card.maximum(:rank)
+      self.rank = max ? max + 1 : 1
+    end
+  end
 end
