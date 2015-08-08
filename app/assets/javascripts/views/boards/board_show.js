@@ -34,16 +34,24 @@ Trello.Views.BoardShow = Backbone.CompositeView.extend({
         });
       })
     })
-    // this.bindSortableCards();
   },
 
   bindSortableCards: function () {
-    // debugger;
     this.$('.sortable-cards').sortable( {
       items: '.card_list_item',
       connectWith: '.sortable-cards',
-      update: this.updateCardPlacement.bind(this)
+      update: this.updateCardPlacement.bind(this),
+      start: this.addDragged.bind(this),
+      stop: this.removeDragged.bind(this)
     });
+  },
+
+  addDragged: function (event, ui) {
+    ui.item.addClass("dragged");
+  },
+
+  removeDragged: function (event, ui) {
+    ui.item.removeClass("dragged");
   },
 
   render: function () {
@@ -54,7 +62,9 @@ Trello.Views.BoardShow = Backbone.CompositeView.extend({
     this.$('.sortable-lists').sortable({
       handle: '.panel-heading',
       items: '.list-item',
-      update: this.updateListPlacement.bind(this)
+      update: this.updateListPlacement.bind(this),
+      start: this.addDragged.bind(this),
+      stop: this.removeDragged.bind(this)
     });
 
     this.bindSortableCards();
