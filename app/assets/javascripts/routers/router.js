@@ -7,6 +7,7 @@ Trello.Routers.Router = Backbone.Router.extend({
   initialize: function (options) {
     this.$rootEl = options.$rootEl;
     this.boards().fetch();
+    var $rootView = new Trello.Views.Root();
   },
 
   boards: function () {

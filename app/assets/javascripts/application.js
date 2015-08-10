@@ -13,9 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.serializejson
+//= require bootstrap-sprockets
 //= require jquery-ui
 //= require underscore
 //= require backbone
+//= require backbone.bootstrap-modal
 //= require composite_view
 //= require trello
 //= require_tree ../templates

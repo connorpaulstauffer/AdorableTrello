@@ -4,8 +4,7 @@ window.Trello = {
   Views: {},
   Routers: {},
   initialize: function() {
-    var $rootEl = $('#root');
-    new Trello.Routers.Router({ $rootEl: $rootEl })
+    new Trello.Routers.Router({ $rootEl: $('#root') });
     Backbone.history.start();
   }
 };
