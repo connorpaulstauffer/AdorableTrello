@@ -49,7 +49,7 @@ Trello.Views.Root = Backbone.View.extend({
         delete userData['user']['password-confirmation'];
 
         newUser.save(userData, {
-          success: function () {
+          success: function (model, resp) {
             window.location.reload(true);
           },
 
@@ -65,7 +65,7 @@ Trello.Views.Root = Backbone.View.extend({
       var newSession = new Trello.Models.Session();
 
       newSession.save(userData, {
-        success: function () {
+        success: function (model, resp) {
           window.location.reload(true);
         },
 

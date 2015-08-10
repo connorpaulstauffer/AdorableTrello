@@ -17,7 +17,7 @@ Trello.Views.BoardShow = Backbone.CompositeView.extend({
     this.$('.sortable-lists').children().each(function (idx, listItem) {
       var list = view.model.lists().getOrFetch($(listItem).data("id"));
       list.save({ rank: idx + 1 });
-    })
+    });
   },
 
   updateCardPlacement: function (event, ui) {
@@ -32,8 +32,8 @@ Trello.Views.BoardShow = Backbone.CompositeView.extend({
         card.save({ rank: cardIdx + 1, list_id: $(listItem).data("id")}, {
           patch: true
         });
-      })
-    })
+      });
+    });
   },
 
   bindSortableCards: function () {
@@ -47,11 +47,11 @@ Trello.Views.BoardShow = Backbone.CompositeView.extend({
   },
 
   addDragged: function (event, ui) {
-    ui.item.addClass("dragged");
+    ui.item.find('> div').addClass("dragged");
   },
 
   removeDragged: function (event, ui) {
-    ui.item.removeClass("dragged");
+    ui.item.find('> div').removeClass("dragged");
   },
 
   render: function () {

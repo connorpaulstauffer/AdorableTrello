@@ -6,17 +6,24 @@
   width: 250px;
   max-height: 100%;
   overflow-y: hidden;
+  margin-bottom: 0;
 }
 
 .list-inline {
   white-space:nowrap;
   max-height: 100%;
+  margin-bottom: 0;
+}
+
+#lists {
+  height: 100%;
 }
 
 .list-item {
   display: inline-block;
   vertical-align: top;
   height: 100%;
+  padding-right: 0;
 }
 
 .card-list {

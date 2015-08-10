@@ -8,8 +8,14 @@
 
 .board {
     overflow-x:scroll;
-    overflow-y: hidden; 
+    overflow-y: hidden;
     width:100%;
     padding: 0 15px;
     height: 100vh;
+}
+
+.board-list-item {
+  width: 300px;
+  height: 100px;
+  font-size: 18px;
 }
