@@ -1,0 +1,2 @@
+(function() { this.JST || (this.JST = {}); this.JST["cards/card_item"] = function(obj){var __p=[],print=function(){__p.push.apply(__p,arguments);};with(obj||{}){__p.push('<div class="panel panel-default card-item">\n  ');  if (card.get('image_url')) { ; __p.push('\n    <div class="panel-body card-img">\n      <img src="',  card.escape('image_url') ,'"\n           class="img-responsive center-block"/>\n    </div>\n  ');   } ; __p.push('\n\n  <div class="panel-footer">\n    ',  card.escape('name') ,'\n  </div>\n</div>\n');}return __p.join('');};
+}).call(this);
