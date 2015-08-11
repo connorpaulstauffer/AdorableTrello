@@ -4,13 +4,21 @@ Trello.Views.BoardIndex = Backbone.CompositeView.extend({
   className: 'container',
 
   initialize: function () {
-    this.listenTo(this.collection, "add", this.addBoardItem.bind(this));
-    this.addBoardForm();
+    this.listenTo(this.collection, "add", function (model) {
+      this.boardForm.remove();
+      this.addBoardItem(model);
+      this.addBoardForm();
+    }.bind(this));
+
     this.collection.each(this.addBoardItem.bind(this));
+    this.addBoardForm();
   },
 
   addBoardForm: function () {
-    var boardForm = new Trello.Views.BoardForm();
+    var boardForm = new Trello.Views.BoardForm({
+      collection: this.collection
+    });
+    this.boardForm = boardForm;
     this.addSubview('#boards', boardForm);
   },
 

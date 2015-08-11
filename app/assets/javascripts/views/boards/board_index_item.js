@@ -7,7 +7,7 @@ Trello.Views.BoardIndexItem = Backbone.View.extend({
     return { 'href': "#/boards/" + this.model.id };
   },
 
-  className: 'list-group-item board-list-item active',
+  className: 'board-list-item active nounderline',
 
   render: function () {
     var content = this.template({ board: this.model });

@@ -15,7 +15,17 @@
 }
 
 .board-list-item {
+  display: inline-block;
   width: 300px;
-  height: 100px;
   font-size: 18px;
+  margin-right: 10px;
+  vertical-align: top;
+}
+
+.board-index-panel {
+  height: 70px;
+}
+
+.board-index-panel-form {
+  height: 115px;
 }

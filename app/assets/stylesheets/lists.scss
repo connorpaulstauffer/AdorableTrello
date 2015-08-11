@@ -7,6 +7,9 @@
   max-height: 100%;
   overflow-y: hidden;
   margin-bottom: 0;
+  .input-form {
+    margin-bottom: 0;
+  }
 }
 
 .list-inline {
@@ -28,4 +31,19 @@
 
 .card-list {
   overflow-y: scroll;
+  padding: 0;
+  padding-top: 10px;
+  .card_list_item {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}
+
+.card-form-panel {
+  margin: 0;
+  height: 40px;
+  div {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
 }

@@ -5,9 +5,27 @@
 
   <ul class="panel-body card-list sortable-cards">
   </ul>
+
+  <a href="#" class="card-form-link">
+    <div class="panel panel-default card-form-panel">
+      <div class="panel-body">
+        <h5>New Card</h5>
+      </div>
+    </div>
+  </a>
+  <div class="panel panel-default input-form" style="display:none">
+    <div class="panel-body board-index-panel-form">
+      <form action="index.html" method="post">
+        <div class="form-group">
+          <input type="text" class="form-control card-name" name="card[name]" placeholder="Name...">
+        </div>
+        <button type="submit" class="btn btn-success card-submit">Submit</button>
+      </form>
+    </div>
 </div>
 
 <script type="text/javascript">
   var boardHeight = $('.board').height();
-  $('.card-list').css("max-height", boardHeight - 42);
+  $('.list-container').css("max-height", boardHeight - 20);
+  $('.card-list').css("max-height", boardHeight - 100)
 </script>

@@ -9,7 +9,7 @@ Trello.Views.CardItem = Backbone.View.extend({
     return {
       'data-list-id': this.model.get('list_id'),
       'data-id': this.model.id
-    }
+    };
   },
 
   render: function () {
