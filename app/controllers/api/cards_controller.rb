@@ -4,7 +4,7 @@ class Api::CardsController < ApplicationController
     if card.update(card_params)
       render json: card
     else
-      render json: "error"
+      render json: card.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -28,6 +28,6 @@ class Api::CardsController < ApplicationController
 
   private
   def card_params
-    params.require(:card).permit(:name, :rank, :list_id, :image_url)
+    params.require(:card).permit(:name, :rank, :list_id, :image_url, :description)
   end
 end

@@ -57,7 +57,6 @@ Trello.Views.List = Backbone.CompositeView.extend({
     this.removeModelSubview('.card-list', card);
   },
 
-
   render: function () {
     var content = this.template({ list: this.model });
     this.$el.html(content);

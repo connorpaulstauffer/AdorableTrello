@@ -1,0 +1,26 @@
+<div class="errors"></div>
+
+<div class="form-group">
+  <label for="card-name">Name</label>
+  <input type="text"
+         class="form-control"
+         id="card-name"
+         name="card[name]"
+         value="<%= card.get("name") %>">
+</div>
+
+<div class="form-group">
+  <label for="card-description">Description</label>
+  <textarea class="form-control"
+            id="card-description"
+            name="card[description]"><%= card.get("description") %></textarea>
+</div>
+
+<div class="form-group">
+  <label for="card-image-url">Image Url</label>
+  <input type="text"
+         class="form-control"
+         id="card-image-url"
+         name="card[image_url]"
+         value="<%= card.get("image_url") %>">
+</div>
