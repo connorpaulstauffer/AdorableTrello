@@ -11,8 +11,6 @@ Trello.Views.List = Backbone.CompositeView.extend({
 
   initialize: function () {
     this.listenTo(this.model.cards(), "add", this.deactivateForm.bind(this));
-    // this.listenTo(this.model.cards(), "remove", this.removeCardItem.bind(this));
-    // this.listenTo(this.model, "sync", this.render);
     this.model.cards().each(this.addCardItem.bind(this));
   },
 
@@ -63,5 +61,11 @@ Trello.Views.List = Backbone.CompositeView.extend({
     this.attachSubviews();
 
     return this;
+  },
+
+  onRender: function () {
+    this.boardHeight = $('.board').height();
+    this.$('.list-container').css("max-height", this.boardHeight);
+    this.$('.card-list').css("max-height", this.boardHeight - 155)
   }
 });

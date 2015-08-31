@@ -68,6 +68,7 @@ Trello.Views.BoardShow = Backbone.CompositeView.extend({
     });
 
     this.bindSortableCards();
+    this.onRender();
 
     return this;
   }
