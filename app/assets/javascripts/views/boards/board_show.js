@@ -7,11 +7,22 @@ Trello.Views.BoardShow = Backbone.CompositeView.extend({
     this.listenTo(this.model.lists(), "add", this.addListItem.bind(this));
     this.listenTo(this.model, "sync", this.render);
     this.model.lists().each(this.addListItem.bind(this));
+    this.addListForm();
   },
 
   addListItem: function (list) {
+    this.removeSubview("#lists", this.listForm);
     var listView = new Trello.Views.List({ model: list });
     this.addSubview('#lists', listView);
+    this.addListForm();
+  },
+
+  addListForm: function () {
+    this.listForm = new Trello.Views.ListForm({
+      collection: this.model.lists(),
+      model: this.model
+    });
+    this.addSubview('#lists', this.listForm);
   },
 
   updateListPlacement: function (event, ui) {

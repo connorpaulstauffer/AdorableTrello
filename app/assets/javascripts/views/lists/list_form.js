@@ -1,16 +1,14 @@
-Trello.Views.BoardForm = Backbone.View.extend({
-  template: JST['boards/board_form'],
+Trello.Views.ListForm = Backbone.View.extend({
+  template: JST['lists/list_form'],
 
-  tagName: 'a',
+  tagName: 'li',
 
-  attributes: { 'href': 'javascript:void(0)'},
-
-  className: 'board-list-item',
+  className: 'list-item',
 
   events: {
-    "click .board-form-link": "activateForm",
-    "click .board-submit": "submitForm",
-    "blur .board-name": "deactivateForm"
+    "click .list-form-link": "activateForm",
+    "click .list-submit": "submitForm",
+    "blur .list-name": "deactivateForm"
   },
 
   activateForm: function (event) {
@@ -28,6 +26,7 @@ Trello.Views.BoardForm = Backbone.View.extend({
   submitForm: function (event) {
     event.preventDefault();
     var formData = $(event.currentTarget).parent().serializeJSON();
+    formData.list.board_id = this.model.id;
     this.collection.create(formData, { wait: true });
   },
 
