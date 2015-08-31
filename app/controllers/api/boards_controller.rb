@@ -1,4 +1,5 @@
 class Api::BoardsController < ApplicationController
+  before_action :redirect_unless_logged_in
   def index
     boards = current_user.boards
     if boards

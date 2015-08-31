@@ -1,0 +1,31 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" id="site-navbar">
+  <div class="container-fluid navbar-inner">
+    <button type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#navbar-collapse"
+            aria-expanded="false">
+       <span class="sr-only">Toggle navigation</span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+     </button>
+
+    <div class="navbar-header">
+      <a href="javascipt:void(0)" class="navbar-brand">
+        <a href="javascript:void(0)" class="navbar-brand" id="logo">Trello</a>
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <% if (currentUser) { %>
+          <li> <a href="javascript:void(0)" id="sign-out">Sign Out</a></li>
+        <% } else { %>
+          <li><a href="javascript:void(0)" id="log-in">Log In</a></li>
+          <li><a href="javascript:void(0)" id="sign-up">Sign Up</a></li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

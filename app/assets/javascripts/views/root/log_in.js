@@ -3,6 +3,17 @@ Trello.Views.LogIn = Backbone.CompositeView.extend({
 
   template: JST['root/log_in'],
 
+  initialize: function (options) {
+    this.message = options.message;
+  },
+
+  addAlert: function () {
+    if (this.message) {
+      var alertView = new Trello.Views.Alert({ message: this.message })
+      this.addSubview(".alerts", alertView);
+    }
+  },
+
   addErrors: function (errors) {
     this.removeErrors();
 
@@ -19,8 +30,9 @@ Trello.Views.LogIn = Backbone.CompositeView.extend({
   },
 
   render: function () {
-    var content = this.template({ errors: this.errors });
+    var content = this.template();
     this.$el.html(content);
+    this.addAlert();
 
     return this;
   }

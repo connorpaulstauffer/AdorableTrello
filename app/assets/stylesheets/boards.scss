@@ -6,6 +6,10 @@
   height: 100vh;
 }
 
+.board-container {
+  padding-top: 10px;
+}
+
 .board {
     overflow-x:scroll;
     overflow-y: hidden;

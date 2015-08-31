@@ -6,20 +6,42 @@ Trello.Routers.Router = Backbone.Router.extend({
 
   initialize: function (options) {
     this.$rootEl = options.$rootEl;
-    this.$rootView = new Trello.Views.Root();
+    // this.$rootView = new Trello.Views.Root();
+
+    this.$rootEl = options.$rootEl;
+    if (this.$rootEl.data("current-user") == "") {
+      currentUser = null;
+    } else {
+      currentUser = new Trello.Models.User({
+        id: this.$rootEl.data("current-user")
+      });
+      currentUser.fetch();
+    }
+    this.$rootContent = this.$rootEl.find("#content");
+    this.$navBar = this.$rootEl.find("#navbar");
+    this.setupNavBar();
+  },
+
+  setupNavBar: function () {
+    this.navBar = new Trello.Views.NavBar({
+      router: this
+    });
+
+    this.$navBar.html(this.navBar.$el);
+    this.navBar.render();
   },
 
   welcomeOrUserBoardIndex: function () {
     this._boards = new Trello.Collections.Boards();
     var that = this;
-    
+
     this._boards.fetch({
       success: function (collection) {
         that.userBoardIndex();
       },
 
       error: function (collection, response) {
-        that.welcome();
+        that.welcome(response.responseText);
       }
     });
   },
@@ -29,8 +51,11 @@ Trello.Routers.Router = Backbone.Router.extend({
     this.swap(indexView);
   },
 
-  welcome: function () {
-    var welcomeView = new Trello.Views.Welcome();
+  welcome: function (message) {
+    var welcomeView = new Trello.Views.Welcome({
+      message: message,
+      navBar: this.navBar
+    });
     this.swap(welcomeView);
   },
 
@@ -63,7 +88,7 @@ Trello.Routers.Router = Backbone.Router.extend({
       this.currentView.remove();
     }
     this.currentView = newView;
-    this.$rootEl.html(newView.render().$el);
+    this.$rootContent.html(newView.render().$el);
 
     return newView;
   }

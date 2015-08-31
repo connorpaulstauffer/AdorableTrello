@@ -22,27 +22,36 @@
   };
 
   var template = _.template('\
-    <div class="modal-dialog"><div class="modal-content">\
-    <% if (title) { %>\
-      <div class="modal-header">\
-        <% if (allowCancel) { %>\
-          <a class="close">&times;</a>\
+  <div class="modal-dialog"><div class="modal-content">\
+  <% if (title) { %>\
+    <div class="modal-header">\
+      <% if (allowCancel) { %>\
+        <a class="close">&times;</a>\
+      <% } %>\
+      <h4>{{title}}</h4>\
+    </div>\
+  <% } %>\
+  <div class="modal-body">{{content}}</div>\
+  <% if (showFooter) { %>\
+    <div class="modal-footer">\
+      <% if (allowCancel) { %>\
+        <% if (cancelText) { %>\
+          <a href="#" class="btn cancel">{{cancelText}}</a>\
         <% } %>\
-        <h4>{{title}}</h4>\
-      </div>\
-    <% } %>\
-    <div class="modal-body">{{content}}</div>\
-    <% if (showFooter) { %>\
-      <div class="modal-footer">\
-        <% if (allowCancel) { %>\
-          <% if (cancelText) { %>\
-            <a href="#" class="btn cancel">{{cancelText}}</a>\
-          <% } %>\
-        <% } %>\
-        <a href="#" class="btn ok btn-primary">{{okText}}</a>\
-      </div>\
-    <% } %>\
-    </div></div>\
+      <% } %>\
+      <% if (offerSignUp) { %>\
+        <span id="sign-up-option">\
+          Dont have an account?\
+          <a href="javascript:void(0)" id="sign-up-option-link">  Sign Up</a>\
+        </span>\
+      <% } %>\
+      <% if (offerGuestLogin) { %>\
+        <a href="javascript:void(0)" id="guest-login" class="btn btn-success">Guest Login</a>\
+      <% } %>\
+      <a href="#" class="btn ok btn-primary">{{okText}}</a>\
+    </div>\
+  <% } %>\
+  </div></div>\
   ');
 
   //Reset to users' template settings
@@ -130,7 +139,9 @@
         escape: true,
         animate: false,
         template: template,
-        enterTriggersOk: false
+        enterTriggersOk: false,
+        offerSignUp: false,
+        offerGuestLogin: false
       }, options);
     },
 
