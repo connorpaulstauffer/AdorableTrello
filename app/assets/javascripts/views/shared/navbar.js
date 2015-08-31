@@ -13,7 +13,7 @@ Trello.Views.NavBar = Backbone.CompositeView.extend({
   },
 
   goToIndex: function () {
-    Backbone.history.navigate("", { trigger: true });
+    Backbone.history.navigate("#", { trigger: true });
   },
 
   openSignUpModal: function (event) {
@@ -35,7 +35,7 @@ Trello.Views.NavBar = Backbone.CompositeView.extend({
     this.activeModal = modal;
   },
 
-  openLogInModal: function (message) {
+  openLogInModal: function (event, message) {
     this.activeModalView && this.activeModalView.remove();
 
     var logInView = new Trello.Views.LogIn({
@@ -149,7 +149,7 @@ Trello.Views.NavBar = Backbone.CompositeView.extend({
       success: function () {
         currentUser = null;
         this.render();
-        Backbone.history.navigate("", { trigger: true });
+        this.goToIndex();
       }.bind(this)
     })
   },

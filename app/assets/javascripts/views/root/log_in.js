@@ -8,9 +8,11 @@ Trello.Views.LogIn = Backbone.CompositeView.extend({
   },
 
   addAlert: function () {
+    this.$(".alerts").empty();
+    // if (this.alertView) { this.removeSubview(".alerts", this.alertView) };
     if (this.message) {
-      var alertView = new Trello.Views.Alert({ message: this.message })
-      this.addSubview(".alerts", alertView);
+      this.alertView = new Trello.Views.Alert({ message: this.message })
+      this.addSubview(".alerts", this.alertView);
     }
   },
 

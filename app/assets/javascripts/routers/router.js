@@ -84,7 +84,7 @@ Trello.Routers.Router = Backbone.Router.extend({
   },
 
   swap: function (newView) {
-    if (this._currentView) {
+    if (this.currentView) {
       this.currentView.remove();
     }
     this.currentView = newView;

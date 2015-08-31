@@ -2,7 +2,7 @@ class Api::SessionsController < ApplicationController
   def create
     params = user_params
     user = User.find_by_credentials(params[:email], params[:password])
-    if @user
+    if user
       log_in_user!(user)
       render json: user
     elsif params[:email].include?("@adorabletrello.com")

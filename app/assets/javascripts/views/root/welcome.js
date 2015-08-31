@@ -6,7 +6,7 @@ Trello.Views.Welcome = Backbone.CompositeView.extend({
   },
 
   promptLogin: function () {
-    this.navBar.openLogInModal(this.message);
+    this.navBar.openLogInModal(null, this.message);
   },
 
   render: function () {
