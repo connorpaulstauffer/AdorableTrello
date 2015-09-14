@@ -1,62 +1,88 @@
 Trello.Routers.Router = Backbone.Router.extend({
   routes: {
-    "": "welcomeOrUserBoardIndex",
-    "boards/:id": "boardShow"
+    "": "loginOrUserBoardIndex",
+    "boards/:id": "boardShow",
+    "sign-up": "signUp",
+    "log-in": "logIn"
   },
 
   initialize: function (options) {
     this.$rootEl = options.$rootEl;
-    // this.$rootView = new Trello.Views.Root();
-
-    this.$rootEl = options.$rootEl;
-    if (this.$rootEl.data("current-user") == "") {
-      currentUser = null;
-    } else {
-      currentUser = new Trello.Models.User({
-        id: this.$rootEl.data("current-user")
-      });
-      currentUser.fetch();
-    }
     this.$rootContent = this.$rootEl.find("#content");
-    this.$navBar = this.$rootEl.find("#navbar");
+    this.$modalContent = this.$rootEl.find("#modal");
+
+    this.checkCurrentUser();
     this.setupNavBar();
   },
 
-  setupNavBar: function () {
-    this.navBar = new Trello.Views.NavBar({
-      router: this
-    });
+  checkCurrentUser: function () {
+    var currentUserId = this.$rootEl.data("current-user");
+    if (currentUserId == "") {
+      Trello.currentUser = null;
+    } else {
+      Trello.currentUser = new Trello.Models.User({
+        id: this.$rootEl.data("current-user")
+      });
+      Trello.currentUser.fetch();
+    }
+  },
 
-    this.$navBar.html(this.navBar.$el);
+  signUp: function () {
+    var signUpView = new Trello.Views.SignUp();
+    this.openModal(signUpView);
+  },
+
+  logIn: function (message) {
+    var logInView = new Trello.Views.LogIn({
+      message: message
+    });
+    this.openModal(logInView);
+  },
+
+  openModal: function (newModal) {
+    this.currentModal && this.currentModal.remove();
+
+    newModal.router = this;
+    this.currentModal = newModal;
+    this.$modalContent.html(newModal.$el);
+    this.currentModal.render();
+  },
+
+  closeModal: function () {
+    this.currentModal && this.currentModal.remove();
+    this.currentModal = null;
+  },
+
+  setupNavBar: function () {
+    this.navBar = new Trello.Views.NavBar({ router: this });
+    this.$rootEl.find("#navbar").html(this.navBar.$el);
+    this.navBar.render();
+
+  },
+
+  setCurrentUser: function () {
     this.navBar.render();
   },
 
-  welcomeOrUserBoardIndex: function () {
+  loginOrUserBoardIndex: function () {
     this._boards = new Trello.Collections.Boards();
-    var that = this;
 
     this._boards.fetch({
       success: function (collection) {
-        that.userBoardIndex();
-      },
+        this.userBoardIndex();
+      }.bind(this),
 
       error: function (collection, response) {
-        that.welcome(response.responseText);
-      }
+        Backbone.history.navigate("log-in");
+        this.currentView && this.currentView.remove();
+        this.logIn(response.responseText);
+      }.bind(this)
     });
   },
 
   userBoardIndex: function () {
     var indexView = new Trello.Views.BoardIndex({ collection: this._boards });
     this.swap(indexView);
-  },
-
-  welcome: function (message) {
-    var welcomeView = new Trello.Views.Welcome({
-      message: message,
-      navBar: this.navBar
-    });
-    this.swap(welcomeView);
   },
 
   boardShow: function (id) {
@@ -72,7 +98,7 @@ Trello.Routers.Router = Backbone.Router.extend({
         },
 
         error: function () {
-          this.welcome();
+          debugger;
         }
       });
     } else {
@@ -84,9 +110,8 @@ Trello.Routers.Router = Backbone.Router.extend({
   },
 
   swap: function (newView) {
-    if (this.currentView) {
-      this.currentView.remove();
-    }
+    this.closeModal();
+    this.currentView && this.currentView.remove();
     this.currentView = newView;
     this.$rootContent.html(newView.render().$el);
 

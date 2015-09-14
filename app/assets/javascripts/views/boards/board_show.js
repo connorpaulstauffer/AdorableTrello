@@ -26,27 +26,29 @@ Trello.Views.BoardShow = Backbone.CompositeView.extend({
   },
 
   updateListPlacement: function (event, ui) {
-    var view = this;
     this.$('.sortable-lists').children().each(function (idx, listItem) {
-      var list = view.model.lists().getOrFetch($(listItem).data("id"));
-      list.save({ rank: idx + 1 });
-    });
+      var id = $(listItem).data("id");
+      if (id) {
+        var list = this.model.lists().get(id);
+        list.save({ rank: idx + 1 });
+      }
+    }.bind(this));
   },
 
   updateCardPlacement: function (event, ui) {
-    var view = this;
     this.$('.sortable-lists').children().each(function (listIdx, listItem) {
-      var thisList = view.model.lists().getOrFetch($(listItem).data("id"));
-
       $(listItem).find('.sortable-cards').children().each(function (cardIdx, cardItem) {
-        var originalList = view.model.lists().getOrFetch($(cardItem).data("list-id"));
-        var card = originalList.cards().getOrFetch($(cardItem).data("id"));
+        var listId = $(cardItem).data("list-id");
+        if (listId) {
+          var originalList = this.model.lists().get(listId);
+          var card = originalList.cards().get($(cardItem).data("id"));
 
-        card.save({ rank: cardIdx + 1, list_id: $(listItem).data("id")}, {
-          patch: true
-        });
-      });
-    });
+          card.save({ rank: cardIdx + 1, list_id: $(listItem).data("id")}, {
+            patch: true
+          });
+        }
+      }.bind(this));
+    }.bind(this));
   },
 
   bindSortableCards: function () {

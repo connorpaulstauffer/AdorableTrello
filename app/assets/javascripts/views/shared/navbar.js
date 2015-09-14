@@ -3,8 +3,6 @@ Trello.Views.NavBar = Backbone.CompositeView.extend({
 
   events: {
     'click .navbar-brand': "goToIndex",
-    'click #sign-up': 'openSignUpModal',
-    'click #log-in': 'openLogInModal',
     'click #sign-out': 'signOut'
   },
 
@@ -14,89 +12,6 @@ Trello.Views.NavBar = Backbone.CompositeView.extend({
 
   goToIndex: function () {
     Backbone.history.navigate("#", { trigger: true });
-  },
-
-  openSignUpModal: function (event) {
-    this.activeModalView && this.activeModalView.remove();
-
-    var signUpView = new Trello.Views.SignUp();
-    var modal = new Backbone.BootstrapModal({
-      content: signUpView,
-      title: 'Sign Up',
-      okText: 'Sign Up',
-      focusOk: false,
-      cancelText: false,
-      enterTriggersOk: true,
-      animate: true,
-      okCloses: false
-    }).open(this.signUpUser.bind(this, signUpView));
-
-    this.activeModalView = signUpView;
-    this.activeModal = modal;
-  },
-
-  openLogInModal: function (event, message) {
-    this.activeModalView && this.activeModalView.remove();
-
-    var logInView = new Trello.Views.LogIn({
-      message: message
-    });
-    var modal = new Backbone.BootstrapModal({
-      content: logInView,
-      title: 'Log In',
-      okText: 'Log In',
-      focusOk: false,
-      cancelText: false,
-      enterTriggersOk: true,
-      animate: true,
-      okCloses: false,
-      offerSignUp: true,
-      offerGuestLogin: true
-    }).open(this.logInUser.bind(this, logInView));
-    this.activeModal = modal;
-    this.activeModalView = logInView;
-
-    this.activeModal.bind("shown", function () {
-      this.addGuestLogin();
-      this.addSignUpOption();
-    }.bind(this));
-  },
-
-  signUpUser: function (signUpView) {
-    var userData = signUpView.$el.serializeJSON();
-
-    if (userData.user['password'] !== userData.user['password-confirmation']) {
-      var errors = ["Passwords do not match"];
-      signUpView.addErrors(errors);
-    } else {
-      var newUser = new Trello.Models.User();
-      delete userData['user']['password-confirmation'];
-
-      newUser.save(userData, {
-        success: function (model, resp) {
-          window.location.reload(true);
-        },
-
-        error: function (model, resp) {
-          signUpView.addErrors(resp.responseJSON);
-        }
-      });
-    }
-  },
-
-  logInUser: function (logInView) {
-    var userData = logInView.$el.serializeJSON();
-    var newSession = new Trello.Models.Session();
-
-    newSession.save(userData, {
-      success: function (model, resp) {
-        window.location.reload(true);
-      },
-
-      error: function (model, resp) {
-        logInView.addErrors(resp.responseJSON);
-      }
-    });
   },
 
   addSignUpOption: function () {
@@ -144,19 +59,30 @@ Trello.Views.NavBar = Backbone.CompositeView.extend({
   },
 
   signOut: function (event) {
-    var dummySession = new Trello.Models.Session({ id: 0 });
-    dummySession.destroy({
+    event.preventDefault();
+
+    $.ajax({
+      url: "/api/sessions/sign-out",
+      method: "DELETE",
+      dataType: "json",
+
       success: function () {
-        currentUser = null;
+        Trello.currentUser = null;
         this.render();
-        this.goToIndex();
-      }.bind(this)
-    })
+        Backbone.history.navigate("#");
+        this.router.currentView && this.router.currentView.remove();
+        this.router.logIn();
+      }.bind(this),
+
+      error: function () {
+        debugger;
+      }
+    });
   },
 
   render: function () {
     var content = this.template({
-      currentUser: currentUser
+      currentUser: Trello.currentUser
     });
     this.$el.html(content);
 

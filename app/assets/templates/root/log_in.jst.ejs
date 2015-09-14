@@ -1,21 +1,36 @@
-<div class="alerts"></div>
-<div class="errors"></div>
+<div class="modal-contents">
+  <div class="alerts"></div>
 
-<div class="form-group">
-  <label for="user-email">Email address</label>
-  <input type="email"
-         class="form-control"
-         id="user-email"
-         name="user[email]"
-         placeholder="Email"
-         autofocus>
-</div>
+  <div class="guest-login-container">
+    <button type="submit" class="modal-button btn btn-success" id="guest-log-in-button">
+      Guest Login
+    </button>
+  </div>
 
-<div class="form-group">
-  <label for="user-password">Password</label>
-  <input type="password"
-         class="form-control"
-         id="user-password"
-         name="user[password]"
-         placeholder="Password">
+  <h4>or</h4>
+
+  <form id="log-in-form">
+    <div class="form-group">
+      <!-- <label for="user-email">Email address</label> -->
+      <input type="email"
+             class="form-control"
+             id="user-email"
+             name="user[email]"
+             placeholder="Email"
+             autofocus>
+    </div>
+
+    <div class="form-group">
+      <!-- <label for="user-password">Password</label> -->
+      <input type="password"
+             class="form-control"
+             id="user-password"
+             name="user[password]"
+             placeholder="Password">
+    </div>
+  </form>
+
+  <button type="submit" class="modal-button btn btn-primary" id="log-in-button">
+    Log In
+  </button>
 </div>

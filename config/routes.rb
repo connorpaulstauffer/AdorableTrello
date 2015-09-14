@@ -13,4 +13,6 @@ Rails.application.routes.draw do
     resources :lists, only: [:create, :destroy, :show, :update]
     resources :cards, only: [:create, :destroy, :show, :update]
   end
+
+  delete "api/sessions/sign-out", to: "api/sessions#destroy"
 end

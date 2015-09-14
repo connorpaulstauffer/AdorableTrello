@@ -22,6 +22,13 @@ class Api::ListsController < ApplicationController
     end
   end
 
+  def index
+    board = Board.includes(lists: :cards).find(params[:board_id])
+    redirect_to :root && return unless board.user == current_user
+    @lists = board.lists
+    render 'index'
+  end
+
   private
   def list_params
     params.require(:list).permit(:name, :rank, :board_id)
