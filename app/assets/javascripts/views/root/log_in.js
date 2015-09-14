@@ -31,7 +31,8 @@ Trello.Views.LogIn = Trello.Modal.extend({
       success: function (model, response) {
         Trello.currentUser = new Trello.Models.User(model)
         this.router.setCurrentUser();
-        Backbone.history.navigate("", { trigger: true });
+        Backbone.history.navigate("");
+        this.router.loginOrUserBoardIndex();
       }.bind(this),
 
       error: function () {
