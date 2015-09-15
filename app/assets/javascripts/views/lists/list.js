@@ -9,9 +9,10 @@ Trello.Views.List = Backbone.CompositeView.extend({
     return { 'data-id': this.model.id };
   },
 
-  initialize: function () {
+  initialize: function (options) {
     this.listenTo(this.model.cards(), "add", this.deactivateForm.bind(this));
     this.model.cards().each(this.addCardItem.bind(this));
+    this.boardShow = options.boardShow;
   },
 
   events: {
@@ -36,17 +37,16 @@ Trello.Views.List = Backbone.CompositeView.extend({
     event.preventDefault();
     var formData = $(event.currentTarget).parent().serializeJSON();
     formData['card']['list_id'] = this.model.id;
-    var that = this;
     this.model.cards().create(formData, {
       success: function (model) {
-        that.addCardItem(model);
-      },
+        this.addCardItem(model);
+        this.boardShow.bindSortableCards();
+      }.bind(this),
       wait: true
     });
   },
 
-  addCardItem: function (card) {
-
+  addCardItem: function (card, idx, refresh) {
     var cardItemView = new Trello.Views.CardItem({ model: card });
     this.addSubview('.card-list', cardItemView);
   },

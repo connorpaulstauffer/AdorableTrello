@@ -12,7 +12,10 @@ Trello.Views.BoardShow = Backbone.CompositeView.extend({
 
   addListItem: function (list) {
     this.removeSubview("#lists", this.listForm);
-    var listView = new Trello.Views.List({ model: list });
+    var listView = new Trello.Views.List({
+      model: list,
+      boardShow: this
+    });
     this.addSubview('#lists', listView);
     this.addListForm();
   },
