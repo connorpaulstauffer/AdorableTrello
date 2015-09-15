@@ -9,10 +9,9 @@ Trello.Views.List = Backbone.CompositeView.extend({
     return { 'data-id': this.model.id };
   },
 
-  initialize: function (options) {
+  initialize: function () {
     this.listenTo(this.model.cards(), "add", this.deactivateForm.bind(this));
     this.model.cards().each(this.addCardItem.bind(this));
-    this.boardShow = options.boardShow;
   },
 
   events: {
@@ -40,7 +39,6 @@ Trello.Views.List = Backbone.CompositeView.extend({
     this.model.cards().create(formData, {
       success: function (model) {
         this.addCardItem(model);
-        this.boardShow.bindSortableCards();
       }.bind(this),
       wait: true
     });

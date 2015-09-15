@@ -11,6 +11,10 @@ Trello.Views.ListForm = Backbone.View.extend({
     "blur .list-name": "deactivateForm"
   },
 
+  initialize: function (options) {
+    this.boardShow = options.boardShow;
+  },
+
   activateForm: function (event) {
     event.preventDefault();
     this.$('.input-link').css("display", "none");
@@ -27,7 +31,13 @@ Trello.Views.ListForm = Backbone.View.extend({
     event.preventDefault();
     var formData = $(event.currentTarget).parent().serializeJSON();
     formData.list.board_id = this.model.id;
-    this.collection.create(formData, { wait: true });
+    this.collection.create(formData, {
+      success: function () {
+        this.boardShow.bindSortableCards();
+      }.bind(this),
+
+      wait: true
+    });
   },
 
   render: function () {
